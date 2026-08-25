@@ -1,11 +1,97 @@
 (function () {
 
   /* =====================================================
+     IMPEDIR SCROLL AUTOMÁTICO AO ABRIR A LP
+  ===================================================== */
+
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  function forceTop() {
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant"
+    });
+
+  }
+
+  /*
+    Safari e navegadores internos do Instagram/WhatsApp
+    podem tentar restaurar a última posição.
+    Por isso fazemos a correção em mais de um momento.
+  */
+
+  forceTop();
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+      forceTop();
+    }
+  );
+
+  window.addEventListener(
+    "load",
+    function () {
+
+      forceTop();
+
+      setTimeout(
+        function () {
+          forceTop();
+        },
+        50
+      );
+
+      setTimeout(
+        function () {
+          forceTop();
+        },
+        250
+      );
+
+    }
+  );
+
+  window.addEventListener(
+    "pageshow",
+    function (event) {
+
+      /*
+        Isso é especialmente importante quando
+        o usuário volta do WhatsApp para a página.
+      */
+
+      forceTop();
+
+      if (event.persisted) {
+
+        setTimeout(
+          function () {
+            forceTop();
+          },
+          50
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =====================================================
      CONFIGURAÇÕES
   ===================================================== */
 
-  const WHATSAPP_INSTITUTO = "551340427082";
-  const WHATSAPP_CLINICA = "5513996300176";
+  const WHATSAPP_INSTITUTO =
+    "551340427082";
+
+  const WHATSAPP_CLINICA =
+    "5513996300176";
+
 
   const CLICK_ENDPOINT =
     "https://script.google.com/macros/s/AKfycbx-2IhvdBZH2JfLGU-mSVIyub2KHbOrGukal-diPqxm0wa7YF2Uljk4HytL4wDNISf-/exec";
@@ -18,7 +104,8 @@
   function getTrackingData() {
 
     if (
-      typeof window.getLeadTrackingData === "function"
+      typeof window.getLeadTrackingData ===
+      "function"
     ) {
 
       return window.getLeadTrackingData();
@@ -28,14 +115,26 @@
 
     return {
 
-      utm_source: "direct",
-      utm_medium: "none",
-      utm_campaign: "none",
-      utm_content: "none",
-      utm_term: "none",
+      utm_source:
+        "direct",
 
-      fbclid: "",
-      gclid: "",
+      utm_medium:
+        "none",
+
+      utm_campaign:
+        "none",
+
+      utm_content:
+        "none",
+
+      utm_term:
+        "none",
+
+      fbclid:
+        "",
+
+      gclid:
+        "",
 
       landing_page:
         window.location.href,
@@ -67,7 +166,12 @@
         .toUpperCase();
 
 
-    return `LARI-${timestamp}-${random}`;
+    return (
+      "LARI-" +
+      timestamp +
+      "-" +
+      random
+    );
 
   }
 
@@ -87,7 +191,8 @@
 
 
     if (
-      typeof window.gtag !== "function"
+      typeof window.gtag !==
+      "function"
     ) {
 
       return;
@@ -201,7 +306,9 @@
      SALVAR LOCALMENTE
   ===================================================== */
 
-  function saveLocally(record) {
+  function saveLocally(
+    record
+  ) {
 
     try {
 
@@ -351,7 +458,7 @@
 
 
   /* =====================================================
-     WHATSAPP
+     CRIAR LINK WHATSAPP
   ===================================================== */
 
   function createWhatsAppLink(
@@ -360,8 +467,10 @@
   ) {
 
     return (
-      `https://wa.me/${phone}` +
-      `?text=${encodeURIComponent(message)}`
+      "https://wa.me/" +
+      phone +
+      "?text=" +
+      encodeURIComponent(message)
     );
 
   }
@@ -387,6 +496,48 @@
     document.getElementById(
       "link-site"
     );
+
+
+  const scrollButton =
+    document.getElementById(
+      "link-scroll"
+    );
+
+
+  /* =====================================================
+     BOTÃO LINKS IMPORTANTES
+
+     SOMENTE ELE PODE DESCER A PÁGINA.
+  ===================================================== */
+
+  if (scrollButton) {
+
+    scrollButton.addEventListener(
+      "click",
+      function (event) {
+
+        event.preventDefault();
+
+
+        const linksSection =
+          document.getElementById(
+            "links"
+          );
+
+
+        if (linksSection) {
+
+          linksSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+        }
+
+      }
+    );
+
+  }
 
 
   /* =====================================================
@@ -475,7 +626,7 @@
 
 
   /* =====================================================
-     PAGE VIEW PERSONALIZADO
+     PAGE VIEW
   ===================================================== */
 
   sendGA4Event(
