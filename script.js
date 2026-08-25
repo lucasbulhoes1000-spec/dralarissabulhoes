@@ -7,12 +7,8 @@
   const WHATSAPP_INSTITUTO = "551340427082";
   const WHATSAPP_CLINICA = "5513996300176";
 
-  /*
-  Quando criarmos o Google Apps Script,
-  vamos substituir "" pela URL /exec.
-  */
-
-  const CLICK_ENDPOINT = "";
+  const CLICK_ENDPOINT =
+    "https://script.google.com/macros/s/AKfycbx-2IhvdBZH2JfLGU-mSVIyub2KHbOrGukal-diPqxm0wa7YF2Uljk4HytL4wDNISf-/exec";
 
 
   /* =====================================================
@@ -33,17 +29,12 @@
     return {
 
       utm_source: "direct",
-
       utm_medium: "none",
-
       utm_campaign: "none",
-
       utm_content: "none",
-
       utm_term: "none",
 
       fbclid: "",
-
       gclid: "",
 
       landing_page:
@@ -82,7 +73,7 @@
 
 
   /* =====================================================
-     REGISTRAR EVENTO NO GA4
+     GA4
   ===================================================== */
 
   function sendGA4Event(
@@ -168,6 +159,9 @@
       destino:
         destination,
 
+      origem_link:
+        "lp_principal_larissa",
+
       utm_source:
         tracking.utm_source || "",
 
@@ -230,37 +224,18 @@
 
 
   /* =====================================================
-     ENVIAR PARA ENDPOINT EXTERNO
+     ENVIAR PARA GOOGLE SHEETS
   ===================================================== */
 
   function sendToExternalEndpoint(
     record
   ) {
 
-    /*
-    Se ainda não tivermos endpoint,
-    não faz nada.
-    */
-
-    if (!CLICK_ENDPOINT) {
-
-      return;
-
-    }
+    const payload =
+      JSON.stringify(record);
 
 
     try {
-
-      const payload =
-        JSON.stringify(record);
-
-
-      /*
-      sendBeacon é ideal para clique que
-      vai abrir outra página/app,
-      porque tenta enviar o dado mesmo
-      enquanto o navegador está saindo.
-      */
 
       if (
         navigator.sendBeacon
@@ -286,11 +261,6 @@
 
       }
 
-
-      /*
-      Fallback para navegadores
-      sem sendBeacon.
-      */
 
       fetch(
         CLICK_ENDPOINT,
@@ -323,7 +293,7 @@
     catch (error) {
 
       console.log(
-        "Falha ao enviar registro externo."
+        "Falha ao enviar clique para o banco externo."
       );
 
     }
@@ -346,16 +316,10 @@
       );
 
 
-    /*
-    1. Guarda no navegador
-    */
+    saveLocally(
+      record
+    );
 
-    saveLocally(record);
-
-
-    /*
-    2. Registra no GA4
-    */
 
     sendGA4Event(
       gaEvent,
@@ -364,19 +328,10 @@
     );
 
 
-    /*
-    3. Envia para banco externo,
-       quando estiver configurado
-    */
-
     sendToExternalEndpoint(
       record
     );
 
-
-    /*
-    4. Mantém evento genérico de lead
-    */
 
     if (
       typeof window.trackLeadClick ===
@@ -396,7 +351,7 @@
 
 
   /* =====================================================
-     CRIAR LINK DO WHATSAPP
+     WHATSAPP
   ===================================================== */
 
   function createWhatsAppLink(
