@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="robots"
+    content="noindex, nofollow"
+  >
+
+  <title>Agendar avaliação | Dra. Larissa Bulhões</title>
+
+
+  <!-- GOOGLE ANALYTICS -->
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-Y4WBS26X61"
+  ></script>
+
+  <script>
+
+    window.dataLayer =
+      window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+
+    gtag(
+      "config",
+      "G-Y4WBS26X61"
+    );
+
+  </script>
+
+</head>
+
+
+<body>
+
+  <p style="
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 40px;
+    color: #333;
+  ">
+    Abrindo o WhatsApp...
+  </p>
+
+
+  <script>
+
+    (function () {
+
+      const WHATSAPP =
+        "5513996300176";
+
+
+      /*
+      ==========================================
+      CAPTURAR UTMS
+      ==========================================
+      */
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const tracking = {
+
+        utm_source:
+          params.get("utm_source") ||
+          "direct",
+
+        utm_medium:
+          params.get("utm_medium") ||
+          "none",
+
+        utm_campaign:
+          params.get("utm_campaign") ||
+          "none",
+
+        utm_content:
+          params.get("utm_content") ||
+          "none",
+
+        utm_term:
+          params.get("utm_term") ||
+          "none",
+
+        fbclid:
+          params.get("fbclid") || "",
+
+        gclid:
+          params.get("gclid") || ""
+
+      };
+
+
+      /*
+      ==========================================
+      GERAR CLICK ID
+      ==========================================
+      */
+
+      function generateClickId() {
+
+        const timestamp =
+          Date.now()
+            .toString(36)
+            .toUpperCase();
+
+
+        const random =
+          Math.random()
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
+
+
+        return (
+          "LARI-" +
+          timestamp +
+          "-" +
+          random
+        );
+
+      }
+
+
+      const clickId =
+        generateClickId();
+
+
+      /*
+      ==========================================
+      REGISTRO LOCAL
+      ==========================================
+      */
+
+      const record = {
+
+        click_id:
+          clickId,
+
+        data_hora:
+          new Date().toISOString(),
+
+        destino:
+          "whatsapp_clinica",
+
+        origem_link:
+          "redirecionamento_avaliacao",
+
+        ...tracking,
+
+        pagina:
+          window.location.href
+
+      };
+
+
+      try {
+
+        localStorage.setItem(
+          "last_lead_click",
+          JSON.stringify(record)
+        );
+
+      }
+
+      catch (error) {}
+
+
+      /*
+      ==========================================
+      GA4
+      ==========================================
+      */
+
+      gtag(
+        "event",
+        "click_avaliacao",
+        {
+
+          destination:
+            "whatsapp_clinica",
+
+          click_id:
+            clickId,
+
+          utm_source:
+            tracking.utm_source,
+
+          utm_medium:
+            tracking.utm_medium,
+
+          utm_campaign:
+            tracking.utm_campaign,
+
+          utm_content:
+            tracking.utm_content
+
+        }
+      );
+
+
+      /*
+      ==========================================
+      WHATSAPP
+      ==========================================
+      */
+
+      const message =
+        "Olá! Gostaria de agendar uma avaliação na Bulhões Odontologia.";
+
+
+      const whatsappURL =
+
+        "https://wa.me/" +
+        WHATSAPP +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+      /*
+      Pequeno intervalo para dar tempo
+      de disparar o evento antes do redirect.
+      */
+
+      setTimeout(
+        function () {
+
+          window.location.replace(
+            whatsappURL
+          );
+
+        },
+        500
+      );
+
+    })();
+
+  </script>
+
+</body>
+
+</html>
