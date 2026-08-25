@@ -1,710 +1,66 @@
-:root {
-  --bege: #CCBCA6;
-  --marrom: #A18B6C;
-  --marrom-quente: #9A654E;
-  --escuro: #120E0C;
-  --escuro-2: #1A120F;
-  --branco: #FFFFFF;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-
-  color: var(--branco);
-
-  font-family:
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  background:
-    radial-gradient(
-      ellipse at 48% 8%,
-      #684431 0%,
-      #39251C 25%,
-      #211713 50%,
-      #150F0C 76%,
-      #100C0A 100%
-    );
-
-  background-attachment: fixed;
-}
-
-
-/* ===================================================
-   FUNDO
-=================================================== */
-
-.page-background {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: -10;
-
-  pointer-events: none;
-
-  background:
-    radial-gradient(
-      ellipse at 48% 8%,
-      rgba(131, 82, 57, 0.56) 0%,
-      rgba(87, 53, 38, 0.30) 26%,
-      rgba(39, 25, 20, 0.13) 52%,
-      transparent 76%
-    ),
-
-    linear-gradient(
-      180deg,
-      #1A120F 0%,
-      #17100D 45%,
-      #110D0B 100%
-    );
-}
-
-
-/* ===================================================
-   HERO
-=================================================== */
-
-.hero {
-  position: relative;
-
-  width: 100%;
-  height: 100vh;
-
-  min-height: 680px;
-
-  overflow: hidden;
-}
-
-.hero-photo {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  object-position: center 27%;
-}
-
-.hero-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(12,8,7,.62) 0%,
-      rgba(12,8,7,.24) 37%,
-      rgba(12,8,7,.04) 70%
-    ),
-
-    linear-gradient(
-      180deg,
-      rgba(12,8,7,.01) 35%,
-      rgba(12,8,7,.12) 60%,
-      rgba(18,13,10,.55) 81%,
-      rgba(18,13,10,.98) 100%
-    );
-}
-
-.hero-content {
-  position: absolute;
-
-  z-index: 2;
-
-  left: 7vw;
-  top: 50%;
-
-  transform:
-    translateY(-50%);
-}
-
-.hero-prefix {
-  margin-bottom: 9px;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  letter-spacing: 5px;
-
-  color: var(--bege);
-}
-
-
-/*
-  MAIS ESPAÇO ENTRE
-  LARISSA E BULHÕES.
-
-  Isso afasta o ~ do S.
-*/
-
-.hero h1 {
-  font-size:
-    clamp(
-      56px,
-      7vw,
-      105px
-    );
-
-  line-height: .98;
-
-  font-weight: 700;
-
-  letter-spacing: -4px;
-}
-
-.hero-subtitle {
-  margin-top: 25px;
-
-  font-size: 10px;
-
-  font-weight: 500;
-
-  letter-spacing: 2.6px;
-
-  color: #D4B690;
-}
-
-
-/* ===================================================
-   LINKS IMPORTANTES
-=================================================== */
-
-.links-label {
-  position: absolute;
-
-  z-index: 3;
-
-  left: 50%;
-  bottom: 24px;
-
-  transform:
-    translateX(-50%);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 24px;
-
-  width:
-    min(
-      440px,
-      calc(100% - 40px)
-    );
-
-  padding:
-    17px
-    25px;
-
-  border:
-    1px solid
-    rgba(204,188,166,.48);
-
-  border-radius: 999px;
-
-  background:
-    rgba(15,10,8,.42);
-
-  backdrop-filter:
-    blur(10px);
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  color: white;
-
-  text-decoration: none;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  letter-spacing: 1.4px;
-}
-
-.links-label span {
-  color: #D7B27E;
-
-  font-size: 19px;
-}
-
-
-/* ===================================================
-   LINKS
-=================================================== */
-
-.links-section {
-  position: relative;
-
-  width: 100%;
-
-  min-height: 100vh;
-
-  padding:
-    50px
-    20px
-    46px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(18,13,10,.97) 0%,
-      rgba(18,13,10,.92) 15%,
-      rgba(17,12,10,.88) 100%
-    );
-}
-
-.links-section::before {
-  content: "";
-
-  position: absolute;
-
-  top: -240px;
-  left: 0;
-  right: 0;
-
-  height: 520px;
-
-  pointer-events: none;
-
-  background:
-    radial-gradient(
-      ellipse at center top,
-      rgba(130,80,54,.21) 0%,
-      rgba(75,44,32,.12) 37%,
-      transparent 73%
-    );
-}
-
-.links-wrapper {
-  position: relative;
-
-  z-index: 2;
-
-  width:
-    min(
-      760px,
-      100%
-    );
-
-  margin:
-    0 auto;
-}
-
-
-/* ===================================================
-   CARDS
-=================================================== */
-
-.visual-card {
-  position: relative;
-
-  display: block;
-
-  width: 100%;
-
-  height: 205px;
-
-  margin-bottom: 16px;
-
-  overflow: hidden;
-
-  border-radius: 30px;
-
-  border:
-    1px solid
-    rgba(204,188,166,.20);
-
-  background: #100C0A;
-
-  color: white;
-
-  text-decoration: none;
-
-  box-shadow:
-    0 18px 50px
-    rgba(0,0,0,.20);
-}
-
-
-/* ===================================================
-   INSTITUTO
-=================================================== */
-
-.card-instituto {
-  background:
-    linear-gradient(
-      90deg,
-      #9E684E 0%,
-      #8B5B45 14%,
-      #714936 30%,
-      #4A3025 46%,
-      #2B1D17 60%,
-      #18110E 77%,
-      #0F0B09 100%
-    );
-}
-
-.instituto-photo-wrap {
-  position: absolute;
-
-  z-index: 0;
-
-  inset: 0;
-
-  width: 63%;
-  height: 100%;
-
-  overflow: visible;
-}
-
-.instituto-photo {
-  position: absolute;
-
-  top: -18%;
-  left: 6%;
-
-  width: auto;
-
-  height: 140%;
-
-  max-width: none;
-
-  object-fit: contain;
-
-  -webkit-mask-image:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(0,0,0,.30) 3%,
-      #000 12%,
-      #000 67%,
-      rgba(0,0,0,.92) 73%,
-      rgba(0,0,0,.66) 82%,
-      rgba(0,0,0,.25) 92%,
-      transparent 100%
-    );
-
-  mask-image:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(0,0,0,.30) 3%,
-      #000 12%,
-      #000 67%,
-      rgba(0,0,0,.92) 73%,
-      rgba(0,0,0,.66) 82%,
-      rgba(0,0,0,.25) 92%,
-      transparent 100%
-    );
-}
-
-.instituto-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(137,87,64,.08) 0%,
-      rgba(117,73,54,.05) 15%,
-      rgba(79,48,36,.04) 30%,
-      rgba(47,30,23,.11) 43%,
-      rgba(31,21,17,.27) 54%,
-      rgba(22,16,13,.50) 66%,
-      rgba(16,12,10,.72) 78%,
-      rgba(13,10,8,.88) 90%,
-      rgba(12,9,8,.96) 100%
-    );
-}
-
-.card-instituto
-.visual-content-right {
-  right: 46px;
-
-  width: 45%;
-}
-
-
-/* ===================================================
-   OUTROS CARDS
-=================================================== */
-
-.card-avaliacao img,
-.card-site img {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-}
-
-.card-avaliacao img {
-  object-position:
-    58% 52%;
-}
-
-.card-site img {
-  object-position:
-    46% 50%;
-}
-
-.visual-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-}
-
-.overlay-left {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(10,7,6,.97),
-      rgba(12,8,7,.89) 14%,
-      rgba(18,12,10,.74) 27%,
-      rgba(29,18,14,.50) 39%,
-      rgba(35,22,17,.27) 51%,
-      transparent 100%
-    );
-}
-
-.overlay-right {
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(24,15,12,.10) 36%,
-      rgba(31,20,15,.25) 50%,
-      rgba(25,17,13,.49) 63%,
-      rgba(18,13,10,.73) 76%,
-      rgba(13,10,8,.91) 89%,
-      rgba(12,9,8,.98) 100%
-    );
-}
-
-
-/* ===================================================
-   TEXTOS
-=================================================== */
-
-.visual-content {
-  position: absolute;
-
-  z-index: 3;
-
-  top: 50%;
-
-  transform:
-    translateY(-50%);
-}
-
-.visual-content-right {
-  right: 42px;
-
-  width: 43%;
-}
-
-.visual-content-left {
-  left: 42px;
-
-  width: 43%;
-}
-
-.visual-eyebrow {
-  display: block;
-
-  margin-bottom: 9px;
-
-  color: #D1AB7A;
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 2.1px;
-}
-
-.visual-content h2 {
-  font-size: 28px;
-
-  line-height: 1.02;
-
-  font-weight: 600;
-
-  letter-spacing: -.8px;
-}
-
-.visual-line {
-  width: 30px;
-
-  height: 1px;
-
-  margin-top: 14px;
-
-  background: #D1AB7A;
-}
-
-
-/* ===================================================
-   FOOTER
-=================================================== */
-
-footer {
-  position: relative;
-
-  z-index: 2;
-
-  padding-top: 30px;
-
-  text-align: center;
-
-  color: #B58A5C;
-
-  font-size: 8px;
-
-  letter-spacing: 1.8px;
-}
-
-
-/* ===================================================
-   MOBILE
-=================================================== */
-
 @media (max-width: 700px) {
 
   body {
-    background-attachment:
-      scroll;
+    background-attachment: scroll;
   }
 
   .hero {
-    height: 82svh;
-
-    min-height: 555px;
-
-    max-height: 680px;
+    height: 72svh;
+    min-height: 500px;
+    max-height: 590px;
   }
 
   .hero-photo {
-    object-position:
-      62% 20%;
+    object-position: 62% 20%;
   }
 
   .hero-content {
     left: 22px;
     right: 22px;
-
     top: auto;
-
     bottom: 100px;
-
     transform: none;
   }
 
   .hero-prefix {
     margin-bottom: 5px;
-
     font-size: 8px;
-
     letter-spacing: 3.4px;
   }
 
-
-  /*
-    PRINCIPAL AJUSTE DO ~
-  */
-
   .hero h1 {
-    font-size:
-      clamp(
-        40px,
-        12.5vw,
-        52px
-      );
-
+    font-size: clamp(40px, 12.5vw, 52px);
     line-height: 1.01;
-
     letter-spacing: -2.2px;
   }
 
   .hero-subtitle {
     max-width: 280px;
-
     margin-top: 14px;
-
     font-size: 7px;
-
     line-height: 1.55;
-
     letter-spacing: 1.45px;
   }
 
   .links-label {
     bottom: 15px;
-
-    width:
-      calc(
-        100% - 44px
-      );
-
+    width: calc(100% - 44px);
     max-width: 340px;
-
-    padding:
-      13px
-      16px;
-
+    padding: 13px 16px;
     gap: 15px;
-
     font-size: 8px;
   }
 
   .links-section {
     min-height: auto;
-
-    padding:
-      14px
-      12px
-      34px;
+    padding: 14px 12px 34px;
   }
 
   .visual-card {
     height: 132px;
-
     margin-bottom: 12px;
-
     border-radius: 21px;
   }
-
-
-  /* INSTITUTO MOBILE */
 
   .instituto-photo-wrap {
     width: 60%;
@@ -712,127 +68,61 @@ footer {
 
   .instituto-photo {
     top: -13%;
-
     left: -1%;
-
     height: 128%;
 
-    -webkit-mask-image:
-      linear-gradient(
-        90deg,
-        transparent 0%,
-        #000 12%,
-        #000 60%,
-        rgba(0,0,0,.82) 72%,
-        rgba(0,0,0,.38) 87%,
-        transparent 100%
-      );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 12%,
+      #000 60%,
+      rgba(0,0,0,.82) 72%,
+      rgba(0,0,0,.38) 87%,
+      transparent 100%
+    );
 
-    mask-image:
-      linear-gradient(
-        90deg,
-        transparent 0%,
-        #000 12%,
-        #000 60%,
-        rgba(0,0,0,.82) 72%,
-        rgba(0,0,0,.38) 87%,
-        transparent 100%
-      );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 12%,
+      #000 60%,
+      rgba(0,0,0,.82) 72%,
+      rgba(0,0,0,.38) 87%,
+      transparent 100%
+    );
   }
 
-  .card-instituto
-  .visual-content-right {
+  .card-instituto .visual-content-right {
     right: 17px;
-
     width: 50%;
   }
 
   .card-avaliacao img {
-    object-position:
-      66% center;
+    object-position: 66% center;
   }
 
   .card-site img {
-    object-position:
-      43% center;
+    object-position: 43% center;
   }
 
   .visual-content-left {
     left: 18px;
-
     width: 47%;
   }
 
   .visual-content-right {
     right: 18px;
-
     width: 47%;
   }
 
   .visual-eyebrow {
     margin-bottom: 6px;
-
     font-size: 5.8px;
-
     letter-spacing: 1.25px;
   }
 
   .visual-content h2 {
-    font-size:
-      clamp(
-        16px,
-        5vw,
-        20px
-      );
-
+    font-size: clamp(16px, 5vw, 20px);
     line-height: 1.02;
   }
-
-}
-
-
-/* ===================================================
-   CELULARES PEQUENOS
-=================================================== */
-
-@media (max-width: 390px) {
-
-  .hero {
-    height: 80svh;
-
-    min-height: 535px;
-  }
-
-  .hero-photo {
-    object-position:
-      62% 18%;
-  }
-
-  .hero-content {
-    left: 18px;
-    right: 18px;
-
-    bottom: 96px;
-  }
-
-  .hero h1 {
-    font-size: 41px;
-
-    line-height: 1.01;
-  }
-
-  .visual-card {
-    height: 122px;
-  }
-
-  .instituto-photo {
-    left: -5%;
-
-    height: 124%;
-  }
-
-  .visual-content h2 {
-    font-size: 16px;
-  }
-
 }
