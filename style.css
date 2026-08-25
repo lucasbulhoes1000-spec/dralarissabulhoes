@@ -95,7 +95,9 @@ body {
   height: 100%;
 
   object-fit: cover;
-  object-position: center 38%;
+
+  /* sobe menos a imagem e evita cortar a cabeça */
+  object-position: center 27%;
 }
 
 .hero-overlay {
@@ -670,14 +672,6 @@ footer {
     background-attachment: scroll;
   }
 
-
-  /* ===============================================
-     PRIMEIRA DOBRA MAIS CURTA
-
-     ESSA É A MUDANÇA PRINCIPAL.
-     O primeiro card já aparece antes de rolar.
-  =============================================== */
-
   .hero {
     height: 82svh;
 
@@ -686,10 +680,9 @@ footer {
   }
 
 
-  /* FOTO PRINCIPAL */
-
+  /* aproxima a cabeça do topo */
   .hero-photo {
-    object-position: 62% center;
+    object-position: 62% 20%;
   }
 
   .hero-overlay {
@@ -704,9 +697,6 @@ footer {
         rgba(18, 13, 10, 0.99) 100%
       );
   }
-
-
-  /* NOME */
 
   .hero-content {
     left: 22px;
@@ -746,9 +736,6 @@ footer {
     letter-spacing: 1.45px;
   }
 
-
-  /* LINKS IMPORTANTES */
-
   .links-label {
     bottom: 15px;
 
@@ -774,11 +761,6 @@ footer {
     font-size: 15px;
   }
 
-
-  /* ===============================================
-     LINKS COMEÇAM LOGO APÓS O HERO
-  =============================================== */
-
   .links-section {
     min-height: auto;
 
@@ -794,9 +776,6 @@ footer {
     height: 310px;
   }
 
-
-  /* CARDS */
-
   .visual-card {
     height: 132px;
 
@@ -804,9 +783,6 @@ footer {
 
     border-radius: 21px;
   }
-
-
-  /* INSTITUTO */
 
   .instituto-photo-wrap {
     width: 60%;
@@ -895,22 +871,13 @@ footer {
     width: 50%;
   }
 
-
-  /* AVALIAÇÃO */
-
   .card-avaliacao img {
     object-position: 66% center;
   }
 
-
-  /* SITE */
-
   .card-site img {
     object-position: 43% center;
   }
-
-
-  /* TEXTOS DOS CARDS */
 
   .visual-content-left {
     left: 18px;
@@ -946,7 +913,6 @@ footer {
     margin-top: 9px;
   }
 
-
   footer {
     padding-top: 22px;
 
@@ -967,6 +933,10 @@ footer {
     height: 80svh;
 
     min-height: 535px;
+  }
+
+  .hero-photo {
+    object-position: 62% 18%;
   }
 
   .hero-content {
