@@ -49,26 +49,45 @@
 </head>
 
 
-<body>
+<body style="
+  margin: 0;
+  background: #120E0C;
+  color: #FFFFFF;
+">
 
-  <p
+  <div
     style="
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: Arial, sans-serif;
       text-align: center;
-      margin-top: 40px;
-      color: #333;
+      padding: 30px;
     "
   >
-    Abrindo o WhatsApp...
-  </p>
+
+    <p>
+      Abrindo o WhatsApp...
+    </p>
+
+  </div>
 
 
   <script>
 
     (function () {
 
+      /* ==========================================
+         CONFIGURAÇÕES
+      ========================================== */
+
       const WHATSAPP =
         "551340427082";
+
+
+      const CLICK_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbx-2IhvdBZH2JfLGU-mSVIyub2KHbOrGukal-diPqxm0wa7YF2Uljk4HytL4wDNISf-/exec";
 
 
       /* ==========================================
@@ -113,7 +132,7 @@
 
 
       /* ==========================================
-         GERAR CLICK ID
+         CLICK ID
       ========================================== */
 
       function generateClickId() {
@@ -146,7 +165,7 @@
 
 
       /* ==========================================
-         REGISTRO LOCAL
+         CRIAR REGISTRO
       ========================================== */
 
       const record = {
@@ -160,16 +179,30 @@
         destino:
           "whatsapp_instituto",
 
-        origem_link:
-          "redirecionamento_instituto",
+        utm_source:
+          tracking.utm_source,
 
-        ...tracking,
+        utm_medium:
+          tracking.utm_medium,
+
+        utm_campaign:
+          tracking.utm_campaign,
+
+        utm_content:
+          tracking.utm_content,
+
+        utm_term:
+          tracking.utm_term,
 
         pagina:
           window.location.href
 
       };
 
+
+      /* ==========================================
+         SALVAR LOCALMENTE
+      ========================================== */
 
       try {
 
@@ -184,34 +217,112 @@
 
 
       /* ==========================================
+         ENVIAR PARA GOOGLE SHEETS
+      ========================================== */
+
+      function sendToSheets() {
+
+        const payload =
+          JSON.stringify(record);
+
+
+        try {
+
+          if (navigator.sendBeacon) {
+
+            const blob =
+              new Blob(
+                [payload],
+                {
+                  type:
+                    "text/plain;charset=UTF-8"
+                }
+              );
+
+
+            navigator.sendBeacon(
+              CLICK_ENDPOINT,
+              blob
+            );
+
+
+            return;
+
+          }
+
+
+          fetch(
+            CLICK_ENDPOINT,
+            {
+
+              method:
+                "POST",
+
+              mode:
+                "no-cors",
+
+              keepalive:
+                true,
+
+              headers: {
+
+                "Content-Type":
+                  "text/plain;charset=UTF-8"
+
+              },
+
+              body:
+                payload
+
+            }
+          );
+
+        }
+
+        catch (error) {}
+
+      }
+
+
+      sendToSheets();
+
+
+      /* ==========================================
          GA4
       ========================================== */
 
-      gtag(
-        "event",
-        "click_instituto",
-        {
+      if (
+        typeof gtag ===
+        "function"
+      ) {
 
-          destination:
-            "whatsapp_instituto",
+        gtag(
+          "event",
+          "click_instituto",
+          {
 
-          click_id:
-            clickId,
+            destination:
+              "whatsapp_instituto",
 
-          utm_source:
-            tracking.utm_source,
+            click_id:
+              clickId,
 
-          utm_medium:
-            tracking.utm_medium,
+            utm_source:
+              tracking.utm_source,
 
-          utm_campaign:
-            tracking.utm_campaign,
+            utm_medium:
+              tracking.utm_medium,
 
-          utm_content:
-            tracking.utm_content
+            utm_campaign:
+              tracking.utm_campaign,
 
-        }
-      );
+            utm_content:
+              tracking.utm_content
+
+          }
+        );
+
+      }
 
 
       /* ==========================================
@@ -232,10 +343,6 @@
         );
 
 
-      /* ==========================================
-         REDIRECIONAR
-      ========================================== */
-
       setTimeout(
         function () {
 
@@ -244,7 +351,7 @@
           );
 
         },
-        500
+        700
       );
 
     })();
