@@ -10,30 +10,97 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Dra. Larissa Bulhões</title>
+
+  <!-- =========================================
+       SEO BÁSICO
+  ========================================== -->
+
+  <title>Dra. Larissa Bulhões | Links Oficiais</title>
 
   <meta
     name="description"
-    content="Links oficiais da Dra. Larissa Bulhões"
+    content="Acesse os links oficiais da Dra. Larissa Bulhões. Conheça o Instituto Bulhões, agende sua avaliação na Bulhões Odontologia e visite nosso site."
+  >
+
+  <meta
+    name="robots"
+    content="index, follow"
+  >
+
+  <meta
+    name="theme-color"
+    content="#120E0C"
+  >
+
+  <link
+    rel="canonical"
+    href="https://dralarissabulhoes.vercel.app/"
   >
 
 
-  <!-- GOOGLE ANALYTICS 4 -->
+  <!-- =========================================
+       COMPARTILHAMENTO
+       WHATSAPP / INSTAGRAM / FACEBOOK
+  ========================================== -->
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+
+  <meta
+    property="og:locale"
+    content="pt_BR"
+  >
+
+  <meta
+    property="og:title"
+    content="Dra. Larissa Bulhões"
+  >
+
+  <meta
+    property="og:description"
+    content="Odontologia • Educação • Gestão"
+  >
+
+  <meta
+    property="og:url"
+    content="https://dralarissabulhoes.vercel.app/"
+  >
+
+  <meta
+    property="og:image"
+    content="https://dralarissabulhoes.vercel.app/larissa.jpg.JPG"
+  >
+
+  <meta
+    property="og:image:alt"
+    content="Dra. Larissa Bulhões"
+  >
+
+
+  <!-- =========================================
+       GOOGLE ANALYTICS 4
+  ========================================== -->
 
   <script
     async
-    src="https://www.googletagmanager.com/gtag/js?id=G-Y4WBS26X61">
-  </script>
+    src="https://www.googletagmanager.com/gtag/js?id=G-Y4WBS26X61"
+  ></script>
 
   <script>
 
-    window.dataLayer = window.dataLayer || [];
+    window.dataLayer =
+      window.dataLayer || [];
 
     function gtag() {
       dataLayer.push(arguments);
     }
 
-    gtag("js", new Date());
+    gtag(
+      "js",
+      new Date()
+    );
 
     gtag(
       "config",
@@ -43,7 +110,9 @@
   </script>
 
 
-  <!-- FONTES -->
+  <!-- =========================================
+       FONTES
+  ========================================== -->
 
   <link
     rel="preconnect"
@@ -62,6 +131,17 @@
   >
 
 
+  <!-- =========================================
+       PRÉ-CARREGAMENTO DA FOTO PRINCIPAL
+  ========================================== -->
+
+  <link
+    rel="preload"
+    as="image"
+    href="larissa.jpg.JPG"
+  >
+
+
   <!-- CSS -->
 
   <link
@@ -77,7 +157,9 @@
   <div class="page-background"></div>
 
 
-  <!-- HERO -->
+  <!-- =========================================
+       HERO
+  ========================================== -->
 
   <header class="hero">
 
@@ -85,6 +167,8 @@
       src="larissa.jpg.JPG"
       alt="Dra. Larissa Bulhões"
       class="hero-photo"
+      fetchpriority="high"
+      decoding="async"
     >
 
     <div class="hero-overlay"></div>
@@ -112,6 +196,7 @@
       href="#links"
       class="links-label"
       id="link-scroll"
+      aria-label="Ver links importantes"
     >
 
       <span>↓</span>
@@ -128,7 +213,9 @@
 
 
 
-  <!-- LINKS -->
+  <!-- =========================================
+       LINKS
+  ========================================== -->
 
   <main
     class="links-section"
@@ -138,7 +225,7 @@
     <div class="links-wrapper">
 
 
-      <!-- INSTITUTO -->
+      <!-- INSTITUTO BULHÕES -->
 
       <a
         class="visual-card card-instituto"
@@ -146,17 +233,21 @@
         href="https://wa.me/551340427082"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Conheça os cursos do Instituto Bulhões"
       >
 
         <div class="instituto-photo-wrap">
 
           <img
             src="instituto.JPG"
-            alt="Instituto Bulhões"
+            alt="Dra. Larissa Bulhões - Instituto Bulhões"
             class="instituto-photo"
+            loading="lazy"
+            decoding="async"
           >
 
         </div>
+
 
         <div
           class="visual-overlay instituto-overlay"
@@ -192,12 +283,16 @@
         href="https://wa.me/5513996300176"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Agende sua avaliação na Bulhões Odontologia"
       >
 
         <img
           src="avaliacao.JPG"
-          alt="Agende sua avaliação"
+          alt="Resultado estético Bulhões Odontologia"
+          loading="lazy"
+          decoding="async"
         >
+
 
         <div
           class="visual-overlay overlay-left"
@@ -233,12 +328,16 @@
         href="https://www.bulhoesodontologia.com.br/"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Visite o site da Bulhões Odontologia"
       >
 
         <img
           src="site.jpg"
-          alt="Visite nosso site"
+          alt="Lentes de contato dental Bulhões Odontologia"
+          loading="lazy"
+          decoding="async"
         >
+
 
         <div
           class="visual-overlay overlay-right"
@@ -274,7 +373,7 @@
   </main>
 
 
-  <!-- RASTREAMENTO -->
+  <!-- SCRIPT -->
 
   <script src="script.js"></script>
 
