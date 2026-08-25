@@ -7,6 +7,13 @@
   const WHATSAPP_INSTITUTO = "551340427082";
   const WHATSAPP_CLINICA = "5513996300176";
 
+  /*
+  Quando criarmos o Google Apps Script,
+  vamos substituir "" pela URL /exec.
+  */
+
+  const CLICK_ENDPOINT = "";
+
 
   /* =====================================================
      RECUPERAR DADOS DE ATRIBUIÇÃO
@@ -39,7 +46,8 @@
 
       gclid: "",
 
-      landing_page: window.location.href,
+      landing_page:
+        window.location.href,
 
       first_referrer:
         document.referrer || "direct"
@@ -50,7 +58,7 @@
 
 
   /* =====================================================
-     GERAR ID DO CLIQUE
+     GERAR ID ÚNICO DO CLIQUE
   ===================================================== */
 
   function generateClickId() {
@@ -138,31 +146,27 @@
 
 
   /* =====================================================
-     REGISTRAR INTENÇÃO DE LEAD
+     CRIAR REGISTRO DO CLIQUE
   ===================================================== */
 
-  function registerLeadIntent(
+  function createClickRecord(
     destination
   ) {
-
-    const clickId =
-      generateClickId();
-
 
     const tracking =
       getTrackingData();
 
 
-    const record = {
+    return {
 
       click_id:
-        clickId,
+        generateClickId(),
 
-      destination:
-        destination,
-
-      timestamp:
+      data_hora:
         new Date().toISOString(),
+
+      destino:
+        destination,
 
       utm_source:
         tracking.utm_source || "",
@@ -185,6 +189,9 @@
       gclid:
         tracking.gclid || "",
 
+      pagina:
+        window.location.href,
+
       landing_page:
         tracking.landing_page || "",
 
@@ -193,12 +200,14 @@
 
     };
 
+  }
 
-    /*
-    Guarda localmente também.
-    Quando o CRM entrar,
-    podemos aproveitar essa estrutura.
-    */
+
+  /* =====================================================
+     SALVAR LOCALMENTE
+  ===================================================== */
+
+  function saveLocally(record) {
 
     try {
 
@@ -212,7 +221,170 @@
     catch (error) {
 
       console.log(
-        "Não foi possível salvar o clique localmente."
+        "Não foi possível salvar localmente."
+      );
+
+    }
+
+  }
+
+
+  /* =====================================================
+     ENVIAR PARA ENDPOINT EXTERNO
+  ===================================================== */
+
+  function sendToExternalEndpoint(
+    record
+  ) {
+
+    /*
+    Se ainda não tivermos endpoint,
+    não faz nada.
+    */
+
+    if (!CLICK_ENDPOINT) {
+
+      return;
+
+    }
+
+
+    try {
+
+      const payload =
+        JSON.stringify(record);
+
+
+      /*
+      sendBeacon é ideal para clique que
+      vai abrir outra página/app,
+      porque tenta enviar o dado mesmo
+      enquanto o navegador está saindo.
+      */
+
+      if (
+        navigator.sendBeacon
+      ) {
+
+        const blob =
+          new Blob(
+            [payload],
+            {
+              type:
+                "text/plain;charset=UTF-8"
+            }
+          );
+
+
+        navigator.sendBeacon(
+          CLICK_ENDPOINT,
+          blob
+        );
+
+
+        return;
+
+      }
+
+
+      /*
+      Fallback para navegadores
+      sem sendBeacon.
+      */
+
+      fetch(
+        CLICK_ENDPOINT,
+        {
+
+          method:
+            "POST",
+
+          mode:
+            "no-cors",
+
+          keepalive:
+            true,
+
+          headers: {
+
+            "Content-Type":
+              "text/plain;charset=UTF-8"
+
+          },
+
+          body:
+            payload
+
+        }
+      );
+
+    }
+
+    catch (error) {
+
+      console.log(
+        "Falha ao enviar registro externo."
+      );
+
+    }
+
+  }
+
+
+  /* =====================================================
+     REGISTRAR INTENÇÃO
+  ===================================================== */
+
+  function registerIntent(
+    destination,
+    gaEvent
+  ) {
+
+    const record =
+      createClickRecord(
+        destination
+      );
+
+
+    /*
+    1. Guarda no navegador
+    */
+
+    saveLocally(record);
+
+
+    /*
+    2. Registra no GA4
+    */
+
+    sendGA4Event(
+      gaEvent,
+      destination,
+      record.click_id
+    );
+
+
+    /*
+    3. Envia para banco externo,
+       quando estiver configurado
+    */
+
+    sendToExternalEndpoint(
+      record
+    );
+
+
+    /*
+    4. Mantém evento genérico de lead
+    */
+
+    if (
+      typeof window.trackLeadClick ===
+      "function"
+    ) {
+
+      window.trackLeadClick(
+        destination
       );
 
     }
@@ -263,7 +435,7 @@
 
 
   /* =====================================================
-     INSTITUTO BULHÕES
+     INSTITUTO
   ===================================================== */
 
   if (instituto) {
@@ -283,29 +455,10 @@
       "click",
       function () {
 
-        const record =
-          registerLeadIntent(
-            "whatsapp_instituto"
-          );
-
-
-        sendGA4Event(
-          "click_instituto",
+        registerIntent(
           "whatsapp_instituto",
-          record.click_id
+          "click_instituto"
         );
-
-
-        if (
-          typeof window.trackLeadClick ===
-          "function"
-        ) {
-
-          window.trackLeadClick(
-            "whatsapp_instituto"
-          );
-
-        }
 
       }
     );
@@ -314,7 +467,7 @@
 
 
   /* =====================================================
-     AGENDAR AVALIAÇÃO
+     AVALIAÇÃO
   ===================================================== */
 
   if (avaliacao) {
@@ -334,29 +487,10 @@
       "click",
       function () {
 
-        const record =
-          registerLeadIntent(
-            "whatsapp_clinica"
-          );
-
-
-        sendGA4Event(
-          "click_avaliacao",
+        registerIntent(
           "whatsapp_clinica",
-          record.click_id
+          "click_avaliacao"
         );
-
-
-        if (
-          typeof window.trackLeadClick ===
-          "function"
-        ) {
-
-          window.trackLeadClick(
-            "whatsapp_clinica"
-          );
-
-        }
 
       }
     );
@@ -374,16 +508,9 @@
       "click",
       function () {
 
-        const record =
-          registerLeadIntent(
-            "site_bulhoes"
-          );
-
-
-        sendGA4Event(
-          "click_site",
+        registerIntent(
           "site_bulhoes",
-          record.click_id
+          "click_site"
         );
 
       }
