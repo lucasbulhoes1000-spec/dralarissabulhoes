@@ -1,8 +1,9 @@
 :root {
   --bege: #CCBCA6;
   --marrom: #A18B6C;
+  --marrom-quente: #9A654E;
   --escuro: #120E0C;
-  --escuro2: #1A120F;
+  --escuro-2: #1A120F;
   --branco: #FFFFFF;
 }
 
@@ -19,10 +20,7 @@ html {
 body {
   width: 100%;
   min-height: 100vh;
-
   overflow-x: hidden;
-
-  background: #120E0C;
 
   color: var(--branco);
 
@@ -30,12 +28,24 @@ body {
     "Montserrat",
     Arial,
     sans-serif;
+
+  background:
+    radial-gradient(
+      ellipse at 48% 8%,
+      #684431 0%,
+      #39251C 25%,
+      #211713 50%,
+      #150F0C 76%,
+      #100C0A 100%
+    );
+
+  background-attachment: fixed;
 }
 
 
-/* =========================================
-   FUNDO CONTÍNUO DA PÁGINA
-========================================= */
+/* ===================================================
+   FUNDO GERAL
+=================================================== */
 
 .page-background {
   position: fixed;
@@ -47,27 +57,27 @@ body {
   pointer-events: none;
 
   background:
-
     radial-gradient(
-      circle at 48% 15%,
-      rgba(148, 95, 64, 0.34) 0%,
-      rgba(99, 59, 39, 0.20) 25%,
-      rgba(32, 20, 16, 0.11) 50%,
-      transparent 72%
+      ellipse at 48% 8%,
+      rgba(131, 82, 57, 0.56) 0%,
+      rgba(87, 53, 38, 0.30) 26%,
+      rgba(39, 25, 20, 0.13) 52%,
+      transparent 76%
     ),
 
     linear-gradient(
       180deg,
       #1A120F 0%,
-      #15100D 45%,
+      #17100D 45%,
       #110D0B 100%
     );
 }
 
 
-/* =========================================
+/* ===================================================
    HERO
-========================================= */
+   NÃO MEXI NA FOTO PRINCIPAL
+=================================================== */
 
 .hero {
   position: relative;
@@ -82,7 +92,6 @@ body {
   background: transparent;
 }
 
-
 .hero-photo {
   position: absolute;
 
@@ -96,29 +105,27 @@ body {
   object-position: center 38%;
 }
 
-
 .hero-overlay {
   position: absolute;
 
   inset: 0;
 
   background:
-
     linear-gradient(
       90deg,
-      rgba(12,8,7,0.62) 0%,
-      rgba(12,8,7,0.25) 38%,
-      rgba(12,8,7,0.04) 70%
+      rgba(12, 8, 7, 0.62) 0%,
+      rgba(12, 8, 7, 0.24) 37%,
+      rgba(12, 8, 7, 0.04) 70%
     ),
 
     linear-gradient(
       180deg,
-      rgba(12,8,7,0.02) 40%,
-      rgba(12,8,7,0.16) 65%,
-      rgba(18,14,12,0.97) 100%
+      rgba(12, 8, 7, 0.01) 35%,
+      rgba(12, 8, 7, 0.12) 60%,
+      rgba(18, 13, 10, 0.55) 81%,
+      rgba(18, 13, 10, 0.98) 100%
     );
 }
-
 
 .hero-content {
   position: absolute;
@@ -126,23 +133,21 @@ body {
   z-index: 2;
 
   left: 7vw;
-
   top: 50%;
 
   transform: translateY(-50%);
 }
 
-
 .hero-prefix {
   margin-bottom: 9px;
 
   font-size: 11px;
-
   font-weight: 600;
 
   letter-spacing: 5px;
-}
 
+  color: var(--bege);
+}
 
 .hero h1 {
   font-size: clamp(56px, 7vw, 105px);
@@ -154,21 +159,21 @@ body {
   letter-spacing: -4px;
 }
 
-
 .hero-subtitle {
   margin-top: 25px;
 
   font-size: 10px;
-
   font-weight: 500;
 
   letter-spacing: 2.6px;
+
+  color: #D4B690;
 }
 
 
-/* =========================================
+/* ===================================================
    LINKS IMPORTANTES
-========================================= */
+=================================================== */
 
 .links-label {
   position: absolute;
@@ -176,7 +181,6 @@ body {
   z-index: 3;
 
   left: 50%;
-
   bottom: 24px;
 
   transform: translateX(-50%);
@@ -184,7 +188,6 @@ body {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   gap: 24px;
@@ -195,18 +198,18 @@ body {
 
   border:
     1px solid
-    rgba(255,255,255,0.44);
+    rgba(204, 188, 166, 0.48);
 
-  border-radius: 9px;
+  border-radius: 999px;
 
   background:
-    rgba(15,10,8,0.48);
+    rgba(15, 10, 8, 0.42);
 
-  backdrop-filter: blur(9px);
+  backdrop-filter: blur(10px);
 
-  -webkit-backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(10px);
 
-  color: white;
+  color: var(--branco);
 
   text-decoration: none;
 
@@ -217,17 +220,16 @@ body {
   letter-spacing: 1.4px;
 }
 
-
 .links-label span {
-  color: var(--bege);
+  color: #D7B27E;
 
   font-size: 19px;
 }
 
 
-/* =========================================
+/* ===================================================
    ÁREA DOS LINKS
-========================================= */
+=================================================== */
 
 .links-section {
   position: relative;
@@ -237,44 +239,40 @@ body {
   min-height: 100vh;
 
   padding:
-    64px
+    50px
     20px
     46px;
 
-  background: transparent;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 13, 10, 0.97) 0%,
+      rgba(18, 13, 10, 0.92) 15%,
+      rgba(17, 12, 10, 0.88) 100%
+    );
 }
-
-
-/*
-efeito bem suave de continuação
-da luz que vem do hero
-*/
 
 .links-section::before {
   content: "";
 
   position: absolute;
 
-  top: -170px;
-
+  top: -240px;
   left: 0;
-
   right: 0;
 
-  height: 430px;
+  height: 520px;
 
   pointer-events: none;
 
   background:
-
     radial-gradient(
       ellipse at center top,
-      rgba(121,75,50,0.15),
-      rgba(38,24,19,0.08) 40%,
+      rgba(130, 80, 54, 0.21) 0%,
+      rgba(75, 44, 32, 0.12) 37%,
       transparent 73%
     );
 }
-
 
 .links-wrapper {
   position: relative;
@@ -287,9 +285,9 @@ da luz que vem do hero
 }
 
 
-/* =========================================
-   CARDS
-========================================= */
+/* ===================================================
+   BASE DOS CARDS
+=================================================== */
 
 .visual-card {
   position: relative;
@@ -297,10 +295,9 @@ da luz que vem do hero
   display: block;
 
   width: 100%;
-
   height: 205px;
 
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 
   overflow: hidden;
 
@@ -308,93 +305,83 @@ da luz que vem do hero
 
   border:
     1px solid
-    rgba(204,188,166,0.14);
+    rgba(204, 188, 166, 0.20);
 
-  background:
-    rgba(14,10,8,0.7);
+  background: #100C0A;
 
-  color: white;
+  color: var(--branco);
 
   text-decoration: none;
 
   box-shadow:
-    0
-    20px
-    55px
-    rgba(0,0,0,0.22);
+    0 18px 50px rgba(0, 0, 0, 0.20);
 
   transition:
     transform .3s ease,
     box-shadow .3s ease;
 }
 
-
 .visual-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 
   box-shadow:
-    0
-    28px
-    65px
-    rgba(0,0,0,0.32);
+    0 24px 60px rgba(0, 0, 0, 0.30);
 }
 
 
-/* =========================================
-   PRIMEIRO CARD
-========================================= */
+/* ===================================================
+   CARD 1 — INSTITUTO
+=================================================== */
 
 .card-instituto {
   background:
-
     linear-gradient(
       90deg,
-      #B98368 0%,
-      #80503C 31%,
-      #36231B 58%,
-      #0D0A08 100%
+      #9E684E 0%,
+      #8B5B45 14%,
+      #714936 30%,
+      #4A3025 46%,
+      #2B1D17 60%,
+      #18110E 77%,
+      #0F0B09 100%
     );
 }
 
 
-/*
-a área da foto ocupa toda
-a metade esquerda do card
-*/
+/* ÁREA DA FOTO */
 
 .instituto-photo-wrap {
   position: absolute;
 
   z-index: 0;
 
-  top: 0;
-  left: 0;
+  inset: 0;
 
-  width: 57%;
+  width: 63%;
   height: 100%;
 
-  overflow: hidden;
+  overflow: visible;
 
-  background: #9D684D;
+  background: transparent;
 }
 
 
 /*
-Foto grande o suficiente para
-não ficar pequena demais,
-mas sem cortar o rosto.
+   A FOTO AGORA É MENOR,
+   MAS SEM "QUADRADO".
+
+   A máscara faz as bordas
+   desaparecerem gradualmente.
 */
 
 .instituto-photo {
   position: absolute;
 
-  top: -20%;
-
-  left: 4%;
+  top: -18%;
+  left: 6%;
 
   width: auto;
-
-  height: 143%;
+  height: 140%;
 
   max-width: none;
 
@@ -403,21 +390,81 @@ mas sem cortar o rosto.
   transform: none;
 
   transition: transform .5s ease;
-}
 
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, .30) 3%,
+      #000 12%,
+      #000 67%,
+      rgba(0, 0, 0, .92) 73%,
+      rgba(0, 0, 0, .66) 82%,
+      rgba(0, 0, 0, .25) 92%,
+      transparent 100%
+    );
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, .30) 3%,
+      #000 12%,
+      #000 67%,
+      rgba(0, 0, 0, .92) 73%,
+      rgba(0, 0, 0, .66) 82%,
+      rgba(0, 0, 0, .25) 92%,
+      transparent 100%
+    );
+}
 
 .card-instituto:hover
 .instituto-photo {
-  transform: scale(1.02);
+  transform: scale(1.015);
 }
 
 
 /*
-AQUI É O QUE REMOVE O "QUADRADO".
+   Não existe mais mudança seca.
+   Esse degradê cobre praticamente
+   o card inteiro e faz uma passagem lenta.
+*/
 
-A foto recebe máscaras suaves
-nas laterais e passa a se dissolver
-dentro do fundo do card.
+.instituto-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+
+      rgba(137, 87, 64, 0.08) 0%,
+
+      rgba(117, 73, 54, 0.05) 15%,
+
+      rgba(79, 48, 36, 0.04) 30%,
+
+      rgba(47, 30, 23, 0.11) 43%,
+
+      rgba(31, 21, 17, 0.27) 54%,
+
+      rgba(22, 16, 13, 0.50) 66%,
+
+      rgba(16, 12, 10, 0.72) 78%,
+
+      rgba(13, 10, 8, 0.88) 90%,
+
+      rgba(12, 9, 8, 0.96) 100%
+    );
+}
+
+
+/*
+   Remove aquele after que criava
+   sensação de várias faixas.
 */
 
 .instituto-photo-wrap::after {
@@ -432,82 +479,37 @@ dentro do fundo do card.
   pointer-events: none;
 
   background:
-
     linear-gradient(
       90deg,
 
-      rgba(156,101,76,0.42) 0%,
+      rgba(158, 104, 78, 0.16) 0%,
 
-      rgba(156,101,76,0.03) 8%,
+      rgba(158, 104, 78, 0.06) 10%,
 
-      rgba(20,13,10,0.00) 58%,
+      transparent 27%,
 
-      rgba(18,12,9,0.24) 71%,
+      transparent 58%,
 
-      rgba(14,10,8,0.67) 86%,
+      rgba(35, 23, 18, 0.08) 69%,
 
-      rgba(12,9,7,1) 100%
-    ),
+      rgba(20, 14, 11, 0.30) 82%,
 
-    linear-gradient(
-      180deg,
-
-      rgba(19,12,9,0.15) 0%,
-
-      rgba(19,12,9,0.00) 24%,
-
-      rgba(19,12,9,0.00) 70%,
-
-      rgba(19,12,9,0.24) 100%
-    );
-}
-
-
-/*
-camada geral do card para
-fundir ainda melhor foto e fundo
-*/
-
-.instituto-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-
-  background:
-
-    linear-gradient(
-      90deg,
-
-      rgba(15,10,8,0.00) 0%,
-
-      rgba(15,10,8,0.00) 34%,
-
-      rgba(15,10,8,0.11) 47%,
-
-      rgba(15,10,8,0.40) 58%,
-
-      rgba(15,10,8,0.78) 72%,
-
-      rgba(15,10,8,0.96) 88%,
-
-      rgba(15,10,8,1) 100%
+      rgba(14, 10, 8, 0.72) 100%
     );
 }
 
 
 .card-instituto
 .visual-content-right {
-  right: 45px;
+  right: 46px;
 
   width: 45%;
 }
 
 
-/* =========================================
-   OUTROS CARDS
-========================================= */
+/* ===================================================
+   AVALIAÇÃO E SITE
+=================================================== */
 
 .card-avaliacao img,
 .card-site img {
@@ -523,26 +525,23 @@ fundir ainda melhor foto e fundo
   transition: transform .5s ease;
 }
 
-
 .card-avaliacao:hover img,
 .card-site:hover img {
-  transform: scale(1.03);
+  transform: scale(1.025);
 }
-
 
 .card-avaliacao img {
   object-position: 58% 52%;
 }
-
 
 .card-site img {
   object-position: 46% 50%;
 }
 
 
-/* =========================================
-   OVERLAYS
-========================================= */
+/* ===================================================
+   OVERLAYS CARDS 2 E 3
+=================================================== */
 
 .visual-overlay {
   position: absolute;
@@ -552,52 +551,56 @@ fundir ainda melhor foto e fundo
   z-index: 1;
 }
 
-
 .overlay-left {
   background:
-
     linear-gradient(
       90deg,
 
-      rgba(7,5,4,0.98) 0%,
+      rgba(10, 7, 6, 0.97) 0%,
 
-      rgba(7,5,4,0.93) 18%,
+      rgba(12, 8, 7, 0.89) 14%,
 
-      rgba(7,5,4,0.70) 34%,
+      rgba(18, 12, 10, 0.74) 27%,
 
-      rgba(7,5,4,0.26) 55%,
+      rgba(29, 18, 14, 0.50) 39%,
 
-      rgba(7,5,4,0.05) 76%,
+      rgba(35, 22, 17, 0.27) 51%,
 
-      rgba(7,5,4,0.01) 100%
+      rgba(28, 18, 14, 0.11) 62%,
+
+      rgba(15, 10, 8, 0.03) 78%,
+
+      transparent 100%
     );
 }
-
 
 .overlay-right {
   background:
-
     linear-gradient(
       90deg,
 
-      rgba(7,5,4,0.02) 0%,
+      transparent 0%,
 
-      rgba(7,5,4,0.06) 29%,
+      rgba(15, 10, 8, 0.03) 21%,
 
-      rgba(7,5,4,0.26) 46%,
+      rgba(24, 15, 12, 0.10) 36%,
 
-      rgba(7,5,4,0.73) 66%,
+      rgba(31, 20, 15, 0.25) 50%,
 
-      rgba(7,5,4,0.95) 84%,
+      rgba(25, 17, 13, 0.49) 63%,
 
-      rgba(7,5,4,0.99) 100%
+      rgba(18, 13, 10, 0.73) 76%,
+
+      rgba(13, 10, 8, 0.91) 89%,
+
+      rgba(12, 9, 8, 0.98) 100%
     );
 }
 
 
-/* =========================================
-   TEXTO DOS CARDS
-========================================= */
+/* ===================================================
+   TEXTO
+=================================================== */
 
 .visual-content {
   position: absolute;
@@ -609,13 +612,11 @@ fundir ainda melhor foto e fundo
   transform: translateY(-50%);
 }
 
-
 .visual-content-right {
   right: 42px;
 
   width: 43%;
 }
-
 
 .visual-content-left {
   left: 42px;
@@ -623,14 +624,12 @@ fundir ainda melhor foto e fundo
   width: 43%;
 }
 
-
 .visual-eyebrow {
   display: block;
 
   margin-bottom: 9px;
 
-  color:
-    rgba(255,255,255,0.72);
+  color: #D1AB7A;
 
   font-size: 8px;
 
@@ -638,7 +637,6 @@ fundir ainda melhor foto e fundo
 
   letter-spacing: 2.1px;
 }
-
 
 .visual-content h2 {
   font-size: 28px;
@@ -650,33 +648,30 @@ fundir ainda melhor foto e fundo
   letter-spacing: -0.8px;
 }
 
-
 .visual-line {
   width: 30px;
-
   height: 1px;
 
   margin-top: 14px;
 
-  background: var(--bege);
+  background: #D1AB7A;
 }
 
 
-/* =========================================
+/* ===================================================
    FOOTER
-========================================= */
+=================================================== */
 
 footer {
   position: relative;
 
   z-index: 2;
 
-  padding-top: 32px;
+  padding-top: 30px;
 
   text-align: center;
 
-  color:
-    rgba(255,255,255,0.33);
+  color: #B58A5C;
 
   font-size: 8px;
 
@@ -684,12 +679,11 @@ footer {
 }
 
 
-/* =========================================
+/* ===================================================
    MOBILE
-========================================= */
+=================================================== */
 
-@media
-(max-width: 700px) {
+@media (max-width: 700px) {
 
   .hero {
     height: 100svh;
@@ -697,24 +691,19 @@ footer {
     min-height: 650px;
   }
 
-
   .hero-photo {
     object-position: 55% center;
   }
 
-
   .hero-content {
     left: 24px;
-
     right: 24px;
 
     top: auto;
-
     bottom: 120px;
 
     transform: none;
   }
-
 
   .hero h1 {
     font-size: 50px;
@@ -724,13 +713,11 @@ footer {
     letter-spacing: -2.5px;
   }
 
-
   .hero-prefix {
     font-size: 9px;
 
     letter-spacing: 4px;
   }
-
 
   .hero-subtitle {
     max-width: 300px;
@@ -744,7 +731,6 @@ footer {
     letter-spacing: 1.7px;
   }
 
-
   .links-label {
     bottom: 22px;
 
@@ -755,14 +741,12 @@ footer {
     font-size: 9px;
   }
 
-
   .links-section {
     padding:
       38px
       14px
       40px;
   }
-
 
   .visual-card {
     height: 150px;
@@ -773,63 +757,63 @@ footer {
   }
 
 
-  /* INSTITUTO MOBILE */
+  /* INSTITUTO */
 
   .instituto-photo-wrap {
-    width: 58%;
+    width: 64%;
   }
-
 
   .instituto-photo {
-    top: -16%;
+    top: -14%;
+    left: 1%;
 
-    left: 2%;
+    height: 132%;
 
-    height: 134%;
-  }
-
-
-  .instituto-photo-wrap::after {
-    background:
-
+    -webkit-mask-image:
       linear-gradient(
         90deg,
+        transparent 0%,
+        #000 9%,
+        #000 64%,
+        rgba(0,0,0,.80) 76%,
+        rgba(0,0,0,.36) 89%,
+        transparent 100%
+      );
 
-        rgba(156,101,76,0.34) 0%,
-
-        rgba(156,101,76,0.02) 8%,
-
-        rgba(15,10,8,0.00) 54%,
-
-        rgba(15,10,8,0.25) 68%,
-
-        rgba(15,10,8,0.73) 87%,
-
-        rgba(15,10,8,1) 100%
+    mask-image:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 9%,
+        #000 64%,
+        rgba(0,0,0,.80) 76%,
+        rgba(0,0,0,.36) 89%,
+        transparent 100%
       );
   }
-
 
   .instituto-overlay {
     background:
-
       linear-gradient(
         90deg,
 
-        rgba(15,10,8,0.00) 0%,
+        rgba(137, 87, 64, 0.04) 0%,
 
-        rgba(15,10,8,0.02) 32%,
+        rgba(112, 70, 51, 0.03) 22%,
 
-        rgba(15,10,8,0.23) 45%,
+        rgba(67, 42, 31, 0.07) 37%,
 
-        rgba(15,10,8,0.63) 60%,
+        rgba(40, 27, 21, 0.21) 49%,
 
-        rgba(15,10,8,0.91) 76%,
+        rgba(28, 20, 16, 0.47) 61%,
 
-        rgba(15,10,8,1) 100%
+        rgba(19, 14, 11, 0.73) 75%,
+
+        rgba(13, 10, 8, 0.94) 91%,
+
+        rgba(12, 9, 8, 0.99) 100%
       );
   }
-
 
   .card-instituto
   .visual-content-right {
@@ -839,17 +823,15 @@ footer {
   }
 
 
-  /* OUTROS CARDS */
+  /* DEMAIS */
 
   .card-avaliacao img {
     object-position: 60% 52%;
   }
 
-
   .card-site img {
     object-position: 48% 50%;
   }
-
 
   .visual-content-right {
     right: 21px;
@@ -857,13 +839,11 @@ footer {
     width: 48%;
   }
 
-
   .visual-content-left {
     left: 21px;
 
     width: 48%;
   }
-
 
   .visual-eyebrow {
     margin-bottom: 7px;
@@ -873,7 +853,6 @@ footer {
     letter-spacing: 1.4px;
   }
 
-
   .visual-content h2 {
     font-size: 19px;
 
@@ -882,11 +861,9 @@ footer {
     letter-spacing: -.5px;
   }
 
-
   .visual-line {
     width: 22px;
 
     margin-top: 10px;
   }
-
 }
