@@ -12,7 +12,7 @@
 
 
   <!-- =========================================
-       SEO BÁSICO
+       SEO
   ========================================== -->
 
   <title>Dra. Larissa Bulhões | Links Oficiais</title>
@@ -132,7 +132,7 @@
 
 
   <!-- =========================================
-       PRÉ-CARREGAMENTO DA FOTO PRINCIPAL
+       PRELOAD HERO
   ========================================== -->
 
   <link
@@ -142,7 +142,9 @@
   >
 
 
-  <!-- CSS -->
+  <!-- =========================================
+       CSS
+  ========================================== -->
 
   <link
     rel="stylesheet"
@@ -180,10 +182,12 @@
         DRA.
       </p>
 
+
       <h1>
         LARISSA<br>
         BULHÕES
       </h1>
+
 
       <p class="hero-subtitle">
         ODONTOLOGIA • EDUCAÇÃO • GESTÃO
@@ -199,13 +203,17 @@
       aria-label="Ver links importantes"
     >
 
-      <span>↓</span>
+      <span>
+        ↓
+      </span>
 
       <strong>
         LINKS IMPORTANTES
       </strong>
 
-      <span>↓</span>
+      <span>
+        ↓
+      </span>
 
     </a>
 
@@ -225,7 +233,9 @@
     <div class="links-wrapper">
 
 
-      <!-- INSTITUTO BULHÕES -->
+      <!-- =======================================
+           INSTITUTO BULHÕES
+      ======================================== -->
 
       <a
         class="visual-card card-instituto"
@@ -262,10 +272,12 @@
             INSTITUTO BULHÕES
           </span>
 
+
           <h2>
             CONHEÇA<br>
             NOSSOS CURSOS
           </h2>
+
 
           <div class="visual-line"></div>
 
@@ -275,7 +287,9 @@
 
 
 
-      <!-- AVALIAÇÃO -->
+      <!-- =======================================
+           AGENDAR AVALIAÇÃO
+      ======================================== -->
 
       <a
         class="visual-card card-avaliacao"
@@ -307,10 +321,12 @@
             BULHÕES ODONTOLOGIA
           </span>
 
+
           <h2>
             AGENDE SUA<br>
             AVALIAÇÃO
           </h2>
+
 
           <div class="visual-line"></div>
 
@@ -320,7 +336,9 @@
 
 
 
-      <!-- SITE -->
+      <!-- =======================================
+           SITE
+      ======================================== -->
 
       <a
         class="visual-card card-site"
@@ -352,10 +370,12 @@
             BULHÕES ODONTOLOGIA
           </span>
 
+
           <h2>
             VISITE NOSSO<br>
             SITE
           </h2>
+
 
           <div class="visual-line"></div>
 
@@ -366,16 +386,281 @@
     </div>
 
 
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
     <footer>
+
       © 2026 DRA. LARISSA BULHÕES
+
     </footer>
 
   </main>
 
 
-  <!-- SCRIPT -->
+  <!-- =========================================
+       PERSISTÊNCIA DA ORIGEM
+  ========================================== -->
+
+  <script>
+
+    (function () {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const trackingParams = [
+
+        "utm_source",
+
+        "utm_medium",
+
+        "utm_campaign",
+
+        "utm_content",
+
+        "utm_term",
+
+        "fbclid",
+
+        "gclid"
+
+      ];
+
+
+      /*
+      ============================================
+      SALVA UTMs
+      ============================================
+      */
+
+      trackingParams.forEach(
+        function (param) {
+
+          const value =
+            params.get(param);
+
+
+          if (value) {
+
+            localStorage.setItem(
+              param,
+              value
+            );
+
+          }
+
+        }
+      );
+
+
+      /*
+      ============================================
+      LANDING PAGE ORIGINAL
+      ============================================
+      */
+
+      if (
+        !localStorage.getItem(
+          "landing_page"
+        )
+      ) {
+
+        localStorage.setItem(
+          "landing_page",
+          window.location.href
+        );
+
+      }
+
+
+      /*
+      ============================================
+      PRIMEIRO REFERRER
+      ============================================
+      */
+
+      if (
+        !localStorage.getItem(
+          "first_referrer"
+        )
+      ) {
+
+        localStorage.setItem(
+
+          "first_referrer",
+
+          document.referrer ||
+          "direct"
+
+        );
+
+      }
+
+
+      /*
+      ============================================
+      RECUPERAR DADOS
+      ============================================
+      */
+
+      function getTrackingData() {
+
+        return {
+
+          utm_source:
+
+            localStorage.getItem(
+              "utm_source"
+            ) || "direct",
+
+
+          utm_medium:
+
+            localStorage.getItem(
+              "utm_medium"
+            ) || "none",
+
+
+          utm_campaign:
+
+            localStorage.getItem(
+              "utm_campaign"
+            ) || "none",
+
+
+          utm_content:
+
+            localStorage.getItem(
+              "utm_content"
+            ) || "none",
+
+
+          utm_term:
+
+            localStorage.getItem(
+              "utm_term"
+            ) || "none",
+
+
+          fbclid:
+
+            localStorage.getItem(
+              "fbclid"
+            ) || "",
+
+
+          gclid:
+
+            localStorage.getItem(
+              "gclid"
+            ) || "",
+
+
+          landing_page:
+
+            localStorage.getItem(
+              "landing_page"
+            ) || "",
+
+
+          first_referrer:
+
+            localStorage.getItem(
+              "first_referrer"
+            ) || ""
+
+        };
+
+      }
+
+
+      /*
+      ============================================
+      FUNÇÃO DISPONÍVEL PARA FUTURO CRM
+      ============================================
+      */
+
+      window.getLeadTrackingData =
+        getTrackingData;
+
+
+      /*
+      ============================================
+      EVENTO DE INTENÇÃO DE LEAD
+      ============================================
+      */
+
+      window.trackLeadClick =
+        function (destination) {
+
+          const tracking =
+            getTrackingData();
+
+
+          if (
+            typeof gtag ===
+            "function"
+          ) {
+
+            gtag(
+              "event",
+              "lead_click",
+              {
+
+                destination:
+                  destination,
+
+
+                utm_source:
+                  tracking.utm_source,
+
+
+                utm_medium:
+                  tracking.utm_medium,
+
+
+                utm_campaign:
+                  tracking.utm_campaign,
+
+
+                utm_content:
+                  tracking.utm_content,
+
+
+                utm_term:
+                  tracking.utm_term,
+
+
+                landing_page:
+                  tracking.landing_page,
+
+
+                first_referrer:
+                  tracking.first_referrer
+
+              }
+            );
+
+          }
+
+        };
+
+    })();
+
+  </script>
+
+
+  <!-- =========================================
+       SCRIPT PRINCIPAL
+  ========================================== -->
 
   <script src="script.js"></script>
+
 
 </body>
 
