@@ -34,7 +34,10 @@
       dataLayer.push(arguments);
     }
 
-    gtag("js", new Date());
+    gtag(
+      "js",
+      new Date()
+    );
 
     gtag(
       "config",
@@ -46,31 +49,50 @@
 </head>
 
 
-<body>
+<body style="
+  margin: 0;
+  background: #120E0C;
+  color: #FFFFFF;
+">
 
-  <p style="
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 40px;
-    color: #333;
-  ">
-    Abrindo o WhatsApp...
-  </p>
+  <div
+    style="
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    "
+  >
+
+    <p>
+      Abrindo o WhatsApp...
+    </p>
+
+  </div>
 
 
   <script>
 
     (function () {
 
+      /* ==========================================
+         CONFIGURAÇÕES
+      ========================================== */
+
       const WHATSAPP =
         "5513996300176";
 
 
-      /*
-      ==========================================
-      CAPTURAR UTMS
-      ==========================================
-      */
+      const CLICK_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbx-2IhvdBZH2JfLGU-mSVIyub2KHbOrGukal-diPqxm0wa7YF2Uljk4HytL4wDNISf-/exec";
+
+
+      /* ==========================================
+         CAPTURAR UTMS
+      ========================================== */
 
       const params =
         new URLSearchParams(
@@ -109,11 +131,9 @@
       };
 
 
-      /*
-      ==========================================
-      GERAR CLICK ID
-      ==========================================
-      */
+      /* ==========================================
+         CLICK ID
+      ========================================== */
 
       function generateClickId() {
 
@@ -144,11 +164,9 @@
         generateClickId();
 
 
-      /*
-      ==========================================
-      REGISTRO LOCAL
-      ==========================================
-      */
+      /* ==========================================
+         CRIAR REGISTRO
+      ========================================== */
 
       const record = {
 
@@ -161,16 +179,30 @@
         destino:
           "whatsapp_clinica",
 
-        origem_link:
-          "redirecionamento_avaliacao",
+        utm_source:
+          tracking.utm_source,
 
-        ...tracking,
+        utm_medium:
+          tracking.utm_medium,
+
+        utm_campaign:
+          tracking.utm_campaign,
+
+        utm_content:
+          tracking.utm_content,
+
+        utm_term:
+          tracking.utm_term,
 
         pagina:
           window.location.href
 
       };
 
+
+      /* ==========================================
+         SALVAR LOCALMENTE
+      ========================================== */
 
       try {
 
@@ -184,44 +216,118 @@
       catch (error) {}
 
 
-      /*
-      ==========================================
-      GA4
-      ==========================================
-      */
+      /* ==========================================
+         ENVIAR PARA GOOGLE SHEETS
+      ========================================== */
 
-      gtag(
-        "event",
-        "click_avaliacao",
-        {
+      function sendToSheets() {
 
-          destination:
-            "whatsapp_clinica",
+        const payload =
+          JSON.stringify(record);
 
-          click_id:
-            clickId,
 
-          utm_source:
-            tracking.utm_source,
+        try {
 
-          utm_medium:
-            tracking.utm_medium,
+          if (navigator.sendBeacon) {
 
-          utm_campaign:
-            tracking.utm_campaign,
+            const blob =
+              new Blob(
+                [payload],
+                {
+                  type:
+                    "text/plain;charset=UTF-8"
+                }
+              );
 
-          utm_content:
-            tracking.utm_content
+
+            navigator.sendBeacon(
+              CLICK_ENDPOINT,
+              blob
+            );
+
+
+            return;
+
+          }
+
+
+          fetch(
+            CLICK_ENDPOINT,
+            {
+
+              method:
+                "POST",
+
+              mode:
+                "no-cors",
+
+              keepalive:
+                true,
+
+              headers: {
+
+                "Content-Type":
+                  "text/plain;charset=UTF-8"
+
+              },
+
+              body:
+                payload
+
+            }
+          );
 
         }
-      );
+
+        catch (error) {}
+
+      }
 
 
-      /*
-      ==========================================
-      WHATSAPP
-      ==========================================
-      */
+      sendToSheets();
+
+
+      /* ==========================================
+         GA4
+      ========================================== */
+
+      if (
+        typeof gtag ===
+        "function"
+      ) {
+
+        gtag(
+          "event",
+          "click_avaliacao",
+          {
+
+            destination:
+              "whatsapp_clinica",
+
+            click_id:
+              clickId,
+
+            utm_source:
+              tracking.utm_source,
+
+            utm_medium:
+              tracking.utm_medium,
+
+            utm_campaign:
+              tracking.utm_campaign,
+
+            utm_content:
+              tracking.utm_content
+
+          }
+        );
+
+      }
+
+
+      /* ==========================================
+         WHATSAPP
+      ========================================== */
 
       const message =
         "Olá! Gostaria de agendar uma avaliação na Bulhões Odontologia.";
@@ -232,12 +338,14 @@
         "https://wa.me/" +
         WHATSAPP +
         "?text=" +
-        encodeURIComponent(message);
+        encodeURIComponent(
+          message
+        );
 
 
       /*
-      Pequeno intervalo para dar tempo
-      de disparar o evento antes do redirect.
+      Damos um pequeno tempo para GA4
+      e Sheets receberem o registro.
       */
 
       setTimeout(
@@ -248,7 +356,7 @@
           );
 
         },
-        500
+        700
       );
 
     })();
