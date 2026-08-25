@@ -1,158 +1,94 @@
 (function () {
 
-  /*
-  =====================================================
-  CONFIGURAÇÕES
-  =====================================================
-  */
+  /* =====================================================
+     CONFIGURAÇÕES
+  ===================================================== */
 
-  const WHATSAPP_INSTITUTO =
-    "551340427082";
-
-  const WHATSAPP_CLINICA =
-    "5513996300176";
-
-  const STORAGE_NAME =
-    "larissa_attribution";
+  const WHATSAPP_INSTITUTO = "551340427082";
+  const WHATSAPP_CLINICA = "5513996300176";
 
 
-  /*
-  =====================================================
-  LER UTMS
-  =====================================================
-  */
+  /* =====================================================
+     RECUPERAR DADOS DE ATRIBUIÇÃO
+  ===================================================== */
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+  function getTrackingData() {
 
+    if (
+      typeof window.getLeadTrackingData === "function"
+    ) {
 
-  const incomingData = {
+      return window.getLeadTrackingData();
 
-    utm_source:
-      params.get("utm_source") || "",
-
-    utm_medium:
-      params.get("utm_medium") || "",
-
-    utm_campaign:
-      params.get("utm_campaign") || "",
-
-    utm_content:
-      params.get("utm_content") || "",
-
-    utm_term:
-      params.get("utm_term") || "",
-
-    fbclid:
-      params.get("fbclid") || "",
-
-    gclid:
-      params.get("gclid") || ""
-
-  };
+    }
 
 
-  /*
-  =====================================================
-  SALVAR ATRIBUIÇÃO
-  =====================================================
-  */
+    return {
 
-  const hasIncomingData =
-    Object.values(
-      incomingData
-    ).some(Boolean);
+      utm_source: "direct",
 
+      utm_medium: "none",
 
-  if (hasIncomingData) {
+      utm_campaign: "none",
 
-    const savedData = {
+      utm_content: "none",
 
-      ...incomingData,
+      utm_term: "none",
 
-      landing_page:
-        window.location.href,
+      fbclid: "",
 
-      first_seen:
-        new Date().toISOString()
+      gclid: "",
+
+      landing_page: window.location.href,
+
+      first_referrer:
+        document.referrer || "direct"
 
     };
 
+  }
 
-    localStorage.setItem(
-      STORAGE_NAME,
-      JSON.stringify(savedData)
-    );
+
+  /* =====================================================
+     GERAR ID DO CLIQUE
+  ===================================================== */
+
+  function generateClickId() {
+
+    const timestamp =
+      Date.now()
+        .toString(36)
+        .toUpperCase();
+
+
+    const random =
+      Math.random()
+        .toString(36)
+        .substring(2, 8)
+        .toUpperCase();
+
+
+    return `LARI-${timestamp}-${random}`;
 
   }
 
 
-  /*
-  =====================================================
-  RECUPERAR ATRIBUIÇÃO
-  =====================================================
-  */
+  /* =====================================================
+     REGISTRAR EVENTO NO GA4
+  ===================================================== */
 
-  function getAttribution() {
-
-    try {
-
-      const saved =
-        localStorage.getItem(
-          STORAGE_NAME
-        );
-
-
-      if (!saved) {
-
-        return {
-
-          utm_source: "direct",
-          utm_medium: "",
-          utm_campaign: "",
-          utm_content: "",
-          utm_term: "",
-          fbclid: "",
-          gclid: ""
-
-        };
-
-      }
-
-
-      return JSON.parse(saved);
-
-    }
-
-    catch (error) {
-
-      return {};
-
-    }
-
-  }
-
-
-  /*
-  =====================================================
-  ENVIAR EVENTO AO GA4
-  =====================================================
-  */
-
-  function trackGA4(
+  function sendGA4Event(
     eventName,
-    destination
+    destination,
+    clickId
   ) {
 
-    const attribution =
-      getAttribution();
+    const tracking =
+      getTrackingData();
 
 
     if (
-      typeof window.gtag !==
-      "function"
+      typeof window.gtag !== "function"
     ) {
 
       return;
@@ -168,20 +104,29 @@
         destination:
           destination,
 
+        click_id:
+          clickId,
+
         utm_source:
-          attribution.utm_source || "",
+          tracking.utm_source || "",
 
         utm_medium:
-          attribution.utm_medium || "",
+          tracking.utm_medium || "",
 
         utm_campaign:
-          attribution.utm_campaign || "",
+          tracking.utm_campaign || "",
 
         utm_content:
-          attribution.utm_content || "",
+          tracking.utm_content || "",
 
         utm_term:
-          attribution.utm_term || "",
+          tracking.utm_term || "",
+
+        landing_page:
+          tracking.landing_page || "",
+
+        first_referrer:
+          tracking.first_referrer || "",
 
         page_location:
           window.location.href
@@ -192,11 +137,112 @@
   }
 
 
-  /*
-  =====================================================
-  LINKS
-  =====================================================
-  */
+  /* =====================================================
+     REGISTRAR INTENÇÃO DE LEAD
+  ===================================================== */
+
+  function registerLeadIntent(
+    destination
+  ) {
+
+    const clickId =
+      generateClickId();
+
+
+    const tracking =
+      getTrackingData();
+
+
+    const record = {
+
+      click_id:
+        clickId,
+
+      destination:
+        destination,
+
+      timestamp:
+        new Date().toISOString(),
+
+      utm_source:
+        tracking.utm_source || "",
+
+      utm_medium:
+        tracking.utm_medium || "",
+
+      utm_campaign:
+        tracking.utm_campaign || "",
+
+      utm_content:
+        tracking.utm_content || "",
+
+      utm_term:
+        tracking.utm_term || "",
+
+      fbclid:
+        tracking.fbclid || "",
+
+      gclid:
+        tracking.gclid || "",
+
+      landing_page:
+        tracking.landing_page || "",
+
+      first_referrer:
+        tracking.first_referrer || ""
+
+    };
+
+
+    /*
+    Guarda localmente também.
+    Quando o CRM entrar,
+    podemos aproveitar essa estrutura.
+    */
+
+    try {
+
+      localStorage.setItem(
+        "last_lead_click",
+        JSON.stringify(record)
+      );
+
+    }
+
+    catch (error) {
+
+      console.log(
+        "Não foi possível salvar o clique localmente."
+      );
+
+    }
+
+
+    return record;
+
+  }
+
+
+  /* =====================================================
+     CRIAR LINK DO WHATSAPP
+  ===================================================== */
+
+  function createWhatsAppLink(
+    phone,
+    message
+  ) {
+
+    return (
+      `https://wa.me/${phone}` +
+      `?text=${encodeURIComponent(message)}`
+    );
+
+  }
+
+
+  /* =====================================================
+     ELEMENTOS
+  ===================================================== */
 
   const instituto =
     document.getElementById(
@@ -216,34 +262,50 @@
     );
 
 
-  /*
-  =====================================================
-  WHATSAPP INSTITUTO
-  =====================================================
-  */
+  /* =====================================================
+     INSTITUTO BULHÕES
+  ===================================================== */
 
   if (instituto) {
 
     const message =
-
       "Olá! Vim pelo Instagram da Dra. Larissa e gostaria de conhecer os cursos do Instituto Bulhões.";
 
 
     instituto.href =
-
-      `https://wa.me/${WHATSAPP_INSTITUTO}` +
-
-      `?text=${encodeURIComponent(message)}`;
+      createWhatsAppLink(
+        WHATSAPP_INSTITUTO,
+        message
+      );
 
 
     instituto.addEventListener(
       "click",
       function () {
 
-        trackGA4(
+        const record =
+          registerLeadIntent(
+            "whatsapp_instituto"
+          );
+
+
+        sendGA4Event(
           "click_instituto",
-          "whatsapp_instituto"
+          "whatsapp_instituto",
+          record.click_id
         );
+
+
+        if (
+          typeof window.trackLeadClick ===
+          "function"
+        ) {
+
+          window.trackLeadClick(
+            "whatsapp_instituto"
+          );
+
+        }
 
       }
     );
@@ -251,34 +313,50 @@
   }
 
 
-  /*
-  =====================================================
-  WHATSAPP CLÍNICA
-  =====================================================
-  */
+  /* =====================================================
+     AGENDAR AVALIAÇÃO
+  ===================================================== */
 
   if (avaliacao) {
 
     const message =
-
       "Olá! Vim pelo Instagram da Dra. Larissa e gostaria de agendar uma avaliação na Bulhões Odontologia.";
 
 
     avaliacao.href =
-
-      `https://wa.me/${WHATSAPP_CLINICA}` +
-
-      `?text=${encodeURIComponent(message)}`;
+      createWhatsAppLink(
+        WHATSAPP_CLINICA,
+        message
+      );
 
 
     avaliacao.addEventListener(
       "click",
       function () {
 
-        trackGA4(
+        const record =
+          registerLeadIntent(
+            "whatsapp_clinica"
+          );
+
+
+        sendGA4Event(
           "click_avaliacao",
-          "whatsapp_clinica"
+          "whatsapp_clinica",
+          record.click_id
         );
+
+
+        if (
+          typeof window.trackLeadClick ===
+          "function"
+        ) {
+
+          window.trackLeadClick(
+            "whatsapp_clinica"
+          );
+
+        }
 
       }
     );
@@ -286,11 +364,9 @@
   }
 
 
-  /*
-  =====================================================
-  SITE
-  =====================================================
-  */
+  /* =====================================================
+     SITE
+  ===================================================== */
 
   if (site) {
 
@@ -298,9 +374,16 @@
       "click",
       function () {
 
-        trackGA4(
+        const record =
+          registerLeadIntent(
+            "site_bulhoes"
+          );
+
+
+        sendGA4Event(
           "click_site",
-          "site_bulhoes"
+          "site_bulhoes",
+          record.click_id
         );
 
       }
@@ -309,15 +392,14 @@
   }
 
 
-  /*
-  =====================================================
-  PAGE VIEW PERSONALIZADO
-  =====================================================
-  */
+  /* =====================================================
+     PAGE VIEW PERSONALIZADO
+  ===================================================== */
 
-  trackGA4(
+  sendGA4Event(
     "lp_larissa_view",
-    "landing_page"
+    "landing_page",
+    generateClickId()
   );
 
 })();
